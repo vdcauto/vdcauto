@@ -1,30 +1,25 @@
 // ── VDC AUTO — script.js ──────────────────────────────────────────
 
-// ── 1. SCROLL REVEAL ──────────────────────────────────────────────
-const reveals = document.querySelectorAll(’.reveal’);
-const revealObserver = new IntersectionObserver((entries) => {
+// ── 1. SCROLL REVEAL ─────────────────────────────────────────────
+document.querySelectorAll(’.reveal’).forEach(el => {
+new IntersectionObserver((entries, obs) => {
 entries.forEach((e, i) => {
 if (e.isIntersecting) {
 setTimeout(() => e.target.classList.add(‘visible’), i * 80);
-revealObserver.unobserve(e.target);
+obs.unobserve(e.target);
 }
 });
-}, { threshold: 0.1 });
-reveals.forEach(r => revealObserver.observe(r));
+}, { threshold: 0.1 }).observe(el);
+});
 
-// ── 2. NAV SCROLL EFFECT ──────────────────────────────────────────
+// ── 2. NAV SCROLL EFFECT ─────────────────────────────────────────
 const nav = document.querySelector(‘nav’);
 window.addEventListener(‘scroll’, () => {
-if (window.scrollY > 50) {
-nav.style.borderBottomColor = ‘rgba(224,16,16,0.4)’;
-nav.style.background = ‘rgba(8,8,8,0.98)’;
-} else {
-nav.style.borderBottomColor = ‘rgba(224,16,16,0.25)’;
-nav.style.background = ‘rgba(8,8,8,0.92)’;
-}
+nav.style.borderBottomColor = window.scrollY > 50 ? ‘rgba(224,16,16,0.4)’ : ‘rgba(224,16,16,0.25)’;
+nav.style.background = window.scrollY > 50 ? ‘rgba(8,8,8,0.99)’ : ‘rgba(8,8,8,0.92)’;
 });
 
-// ── 3. MOBILE NAV TOGGLE ─────────────────────────────────────────
+// ── 3. MOBILE NAV ────────────────────────────────────────────────
 const menuBtn = document.getElementById(‘menu-btn’);
 const navLinks = document.querySelector(’.nav-links’);
 if (menuBtn) {
@@ -32,203 +27,163 @@ menuBtn.addEventListener(‘click’, () => {
 navLinks.classList.toggle(‘open’);
 menuBtn.textContent = navLinks.classList.contains(‘open’) ? ‘✕’ : ‘☰’;
 });
-}
-
-// Close menu when a link is tapped
 document.querySelectorAll(’.nav-links a’).forEach(link => {
 link.addEventListener(‘click’, () => {
 navLinks.classList.remove(‘open’);
-if (menuBtn) menuBtn.textContent = ‘☰’;
+menuBtn.textContent = ‘☰’;
 });
 });
+}
 
-// ── 4. SMOOTH SCROLL FOR ALL ANCHOR LINKS ─────────────────────────
-document.querySelectorAll(‘a[href^=”#”]’).forEach(anchor => {
-anchor.addEventListener(‘click’, function (e) {
+// ── 4. SMOOTH SCROLL ─────────────────────────────────────────────
+document.querySelectorAll(‘a[href^=”#”]’).forEach(a => {
+a.addEventListener(‘click’, function(e) {
 e.preventDefault();
-const target = document.querySelector(this.getAttribute(‘href’));
-if (target) {
-const offset = 70; // nav height
-const top = target.getBoundingClientRect().top + window.scrollY - offset;
-window.scrollTo({ top, behavior: ‘smooth’ });
-}
+const t = document.querySelector(this.getAttribute(‘href’));
+if (t) window.scrollTo({ top: t.getBoundingClientRect().top + window.scrollY - 70, behavior: ‘smooth’ });
 });
 });
 
-// ── 5. BOOKING FORM VALIDATION & SUBMIT ──────────────────────────
-const form = document.getElementById(‘booking-form’);
+// ── 5. STAT COUNTERS (fire on page load since hero is visible) ────
+function animateCounter(el) {
+const target = parseInt(el.dataset.target);
+const suffix = el.dataset.suffix || ‘’;
+let count = 0;
+const steps = 60;
+const inc = target / steps;
+const timer = setInterval(() => {
+count += inc;
+if (count >= target) { count = target; clearInterval(timer); }
+el.textContent = Math.floor(count) + suffix;
+}, 25);
+}
+
+// Run counters when hero stats come into view
+const statEls = document.querySelectorAll(’.stat-count’);
+if (statEls.length) {
+const statObs = new IntersectionObserver((entries) => {
+entries.forEach(e => {
+if (e.isIntersecting) {
+animateCounter(e.target);
+statObs.unobserve(e.target);
+}
+});
+}, { threshold: 0.3 });
+statEls.forEach(el => statObs.observe(el));
+}
+
+// ── 6. FORMSPREE FORM SUBMIT ─────────────────────────────────────
+const fsForm = document.getElementById(‘fs-form’);
 const submitBtn = document.getElementById(‘form-submit’);
+const successMsg = document.getElementById(‘form-success’);
 
-function showError(input, msg) {
-const group = input.closest(’.form-group’);
-let err = group.querySelector(’.error-msg’);
-if (!err) {
-err = document.createElement(‘span’);
-err.className = ‘error-msg’;
-err.style.cssText = ‘color:#e01010;font-size:12px;margin-top:4px;display:block;’;
-group.appendChild(err);
-}
-err.textContent = msg;
-input.style.borderColor = ‘#e01010’;
-}
-
-function clearError(input) {
-const group = input.closest(’.form-group’);
-const err = group.querySelector(’.error-msg’);
-if (err) err.remove();
-input.style.borderColor = ‘’;
-}
-
-function validateForm() {
-let valid = true;
-const fields = form.querySelectorAll(‘input, select, textarea’);
-
-fields.forEach(field => {
-clearError(field);
-if (!field.value.trim()) {
-showError(field, ‘This field is required.’);
-valid = false;
-}
-});
-
-const phone = form.querySelector(‘input[type=“tel”]’);
-if (phone && phone.value && !/^(?\d{3})?[\s-]?\d{3}[\s-]?\d{4}$/.test(phone.value.trim())) {
-showError(phone, ‘Enter a valid phone number.’);
-valid = false;
-}
-
-const email = form.querySelector(‘input[type=“email”]’);
-if (email && email.value && !/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email.value.trim())) {
-showError(email, ‘Enter a valid email address.’);
-valid = false;
-}
-
-return valid;
-}
-
-if (submitBtn) {
-submitBtn.addEventListener(‘click’, () => {
-if (!validateForm()) return;
+if (fsForm && submitBtn) {
+fsForm.addEventListener(‘submit’, async function(e) {
+e.preventDefault();
 
 ```
+// Clear old errors
+fsForm.querySelectorAll('.error-msg').forEach(el => el.remove());
+fsForm.querySelectorAll('input, select, textarea').forEach(el => el.style.borderColor = '');
+
+// Validate
+let valid = true;
+fsForm.querySelectorAll('[required]').forEach(field => {
+  if (!field.value.trim()) {
+    valid = false;
+    field.style.borderColor = '#e01010';
+    const err = document.createElement('span');
+    err.className = 'error-msg';
+    err.style.cssText = 'color:#e01010;font-size:12px;margin-top:4px;display:block;';
+    err.textContent = 'Required.';
+    field.closest('.form-group').appendChild(err);
+  }
+});
+
+const email = fsForm.querySelector('input[type="email"]');
+if (email && email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+  valid = false;
+  email.style.borderColor = '#e01010';
+}
+
+if (!valid) return;
+
+// Send
 submitBtn.textContent = '⏳ Sending...';
 submitBtn.disabled = true;
 submitBtn.style.background = '#555';
 
-setTimeout(() => {
-  submitBtn.textContent = '✅ Request Sent!';
-  submitBtn.style.background = '#1a7a1a';
-
-  // Clear form
-  form.querySelectorAll('input, textarea').forEach(f => f.value = '');
-  form.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-
+try {
+  const res = await fetch(fsForm.action, {
+    method: 'POST',
+    body: new FormData(fsForm),
+    headers: { 'Accept': 'application/json' }
+  });
+  if (res.ok) {
+    fsForm.style.display = 'none';
+    if (successMsg) successMsg.style.display = 'block';
+  } else {
+    throw new Error('failed');
+  }
+} catch {
+  submitBtn.textContent = '❌ Failed — Try Again';
+  submitBtn.style.background = '#a80d0d';
+  submitBtn.disabled = false;
   setTimeout(() => {
     submitBtn.textContent = '⚙️ Request Appointment';
     submitBtn.style.background = '';
-    submitBtn.disabled = false;
-  }, 4000);
-}, 1500);
+  }, 3000);
+}
 ```
 
 });
 }
 
-// ── 6. ANIMATED STAT COUNTERS ────────────────────────────────────
-function animateCounter(el, target, suffix) {
-let count = 0;
-const duration = 1500;
-const steps = 60;
-const increment = target / steps;
-const interval = duration / steps;
-
-const timer = setInterval(() => {
-count += increment;
-if (count >= target) {
-count = target;
-clearInterval(timer);
-}
-el.textContent = Math.floor(count) + suffix;
-}, interval);
-}
-
-const statsObserver = new IntersectionObserver((entries) => {
-entries.forEach(e => {
-if (e.isIntersecting) {
-const el = e.target;
-const target = parseInt(el.dataset.target);
-const suffix = el.dataset.suffix || ‘’;
-animateCounter(el, target, suffix);
-statsObserver.unobserve(el);
-}
-});
-}, { threshold: 0.5 });
-
-document.querySelectorAll(’.stat-count’).forEach(el => statsObserver.observe(el));
-
-// ── 7. ACTIVE NAV LINK ON SCROLL ─────────────────────────────────
-const sections = document.querySelectorAll(‘section[id]’);
-const navItems = document.querySelectorAll(’.nav-links a’);
-
-window.addEventListener(‘scroll’, () => {
-let current = ‘’;
-sections.forEach(section => {
-const sectionTop = section.offsetTop - 100;
-if (window.scrollY >= sectionTop) current = section.getAttribute(‘id’);
-});
-
-navItems.forEach(link => {
-link.classList.remove(‘active’);
-if (link.getAttribute(‘href’) === ‘#’ + current) {
-link.classList.add(‘active’);
-}
-});
-});
-
-// ── 8. PHONE NUMBER FORMATTER ─────────────────────────────────────
-const phoneInput = document.querySelector(‘input[type=“tel”]’);
-if (phoneInput) {
-phoneInput.addEventListener(‘input’, (e) => {
-let val = e.target.value.replace(/\D/g, ‘’).substring(0, 10);
-if (val.length >= 6) {
-val = `(${val.substring(0,3)}) ${val.substring(3,6)}-${val.substring(6)}`;
-} else if (val.length >= 3) {
-val = `(${val.substring(0,3)}) ${val.substring(3)}`;
-}
-e.target.value = val;
-});
-}
-
-// ── 9. CURRENT YEAR IN FOOTER ────────────────────────────────────
-const yearEl = document.getElementById(‘footer-year’);
-if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-// ── 10. SERVICE CARD CLICK → SCROLL TO BOOKING ───────────────────
+// ── 7. SERVICE CARDS → SCROLL TO FORM + PREFILL ──────────────────
 document.querySelectorAll(’.service-card’).forEach(card => {
 card.style.cursor = ‘pointer’;
 card.addEventListener(‘click’, () => {
-const contact = document.querySelector(’#contact’);
-const serviceSelect = document.querySelector(’#booking-form select’);
-const serviceName = card.querySelector(‘h3’)?.textContent;
-
-```
-if (serviceSelect && serviceName) {
-  Array.from(serviceSelect.options).forEach(opt => {
-    if (opt.text.toLowerCase().includes(serviceName.toLowerCase().split(' ')[0])) {
-      serviceSelect.value = opt.value;
-    }
-  });
+// Prefill the select
+const sel = document.querySelector(’#fs-form select’);
+const title = card.querySelector(‘h3’) ? card.querySelector(‘h3’).textContent.trim() : ‘’;
+if (sel && title) {
+const keyword = title.split(’ ’)[0].toLowerCase();
+Array.from(sel.options).forEach(opt => {
+if (opt.text.toLowerCase().includes(keyword)) sel.value = opt.value;
+});
 }
-
+// Scroll to contact
+const contact = document.getElementById(‘contact’);
 if (contact) {
-  const top = contact.getBoundingClientRect().top + window.scrollY - 70;
-  window.scrollTo({ top, behavior: 'smooth' });
+window.scrollTo({ top: contact.getBoundingClientRect().top + window.scrollY - 70, behavior: ‘smooth’ });
 }
-```
-
 });
 });
 
-console.log(‘✅ VDC Auto — script.js loaded successfully’);.addEventListener('DOMContentLoaded', () => {
-    alert('Welcome to my website!');
+// ── 8. PHONE FORMATTER ───────────────────────────────────────────
+const phoneInput = document.querySelector(‘input[type=“tel”]’);
+if (phoneInput) {
+phoneInput.addEventListener(‘input’, (e) => {
+let v = e.target.value.replace(/\D/g, ‘’).substring(0, 10);
+if (v.length >= 6) v = `(${v.slice(0,3)}) ${v.slice(3,6)}-${v.slice(6)}`;
+else if (v.length >= 3) v = `(${v.slice(0,3)}) ${v.slice(3)}`;
+e.target.value = v;
 });
+}
+
+// ── 9. FOOTER YEAR ───────────────────────────────────────────────
+const yr = document.getElementById(‘footer-year’);
+if (yr) yr.textContent = new Date().getFullYear();
+
+// ── 10. ACTIVE NAV ON SCROLL ─────────────────────────────────────
+window.addEventListener(‘scroll’, () => {
+let current = ‘’;
+document.querySelectorAll(‘section[id]’).forEach(s => {
+if (window.scrollY >= s.offsetTop - 100) current = s.id;
+});
+document.querySelectorAll(’.nav-links a’).forEach(a => {
+a.classList.toggle(‘active’, a.getAttribute(‘href’) === ‘#’ + current);
+});
+});
+
+console.log(‘✅ VDC Auto script.js loaded successfully’);
