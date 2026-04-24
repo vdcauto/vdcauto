@@ -92,13 +92,13 @@ valid = false;
 });
 
 const phone = form.querySelector(‘input[type=“tel”]’);
-if (phone && phone.value && !/^(\d{3})?[\s-]?\d{3}[\s-]?\d{4}$/.test(phone.value.trim())) {
+if (phone && phone.value && !/^(?\d{3})?[\s-]?\d{3}[\s-]?\d{4}$/.test(phone.value.trim())) {
 showError(phone, ‘Enter a valid phone number.’);
 valid = false;
 }
 
 const email = form.querySelector(‘input[type=“email”]’);
-if (email && email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+if (email && email.value && !/^[^\s@]+@[^\s@]+.[^\s@]+$/.test(email.value.trim())) {
 showError(email, ‘Enter a valid email address.’);
 valid = false;
 }
@@ -110,6 +110,7 @@ if (submitBtn) {
 submitBtn.addEventListener(‘click’, () => {
 if (!validateForm()) return;
 
+```
 submitBtn.textContent = '⏳ Sending...';
 submitBtn.disabled = true;
 submitBtn.style.background = '#555';
@@ -128,6 +129,7 @@ setTimeout(() => {
     submitBtn.disabled = false;
   }, 4000);
 }, 1500);
+```
 
 });
 }
@@ -209,6 +211,7 @@ const contact = document.querySelector(’#contact’);
 const serviceSelect = document.querySelector(’#booking-form select’);
 const serviceName = card.querySelector(‘h3’)?.textContent;
 
+```
 if (serviceSelect && serviceName) {
   Array.from(serviceSelect.options).forEach(opt => {
     if (opt.text.toLowerCase().includes(serviceName.toLowerCase().split(' ')[0])) {
@@ -221,8 +224,11 @@ if (contact) {
   const top = contact.getBoundingClientRect().top + window.scrollY - 70;
   window.scrollTo({ top, behavior: 'smooth' });
 }
+```
 
 });
 });
 
-console.log('✅ VDC Auto — script.js loaded successfully');
+console.log(‘✅ VDC Auto — script.js loaded successfully’);.addEventListener('DOMContentLoaded', () => {
+    alert('Welcome to my website!');
+});
