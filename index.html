@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VDC Auto – Full Service Auto Repair</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --red: #e01010;
+    --red-dark: #a80d0d;
+    --silver: #c8c8c8;
+    --silver-light: #e8e8e8;
+    --black: #080808;
+    --dark: #111111;
+    --dark2: #1a1a1a;
+    --dark3: #222222;
+    --text: #dddddd;
+  }
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(--black);
+color: var(--text);
+font-family: ‘Barlow’, sans-serif;
+overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+content:’’;
+position:fixed; inset:0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events:none; z-index:0; opacity:.35;
+}
+
+/* ── NAV ── */
+nav {
+position:fixed; top:0; left:0; right:0; z-index:100;
+display:flex; align-items:center; justify-content:space-between;
+padding:0 40px;
+height:70px;
+background: rgba(8,8,8,0.92);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid rgba(224,16,16,0.25);
+}
+
+.nav-logo {
+display:flex; align-items:center; gap:12px;
+font-family: ‘Bebas Neue’, sans-serif;
+font-size:26px; letter-spacing:3px;
+color:#fff;
+}
+
+.nav-logo span { color: var(--red); }
+
+.nav-links {
+display:flex; gap:32px; list-style:none;
+}
+
+.nav-links a {
+color: var(--silver);
+text-decoration:none;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:15px; font-weight:700; letter-spacing:2px;
+text-transform:uppercase;
+transition: color .2s;
+position:relative;
+}
+
+.nav-links a::after {
+content:’’; position:absolute; bottom:-4px; left:0; right:0;
+height:2px; background:var(--red);
+transform:scaleX(0); transform-origin:left;
+transition:transform .25s;
+}
+
+.nav-links a:hover { color:#fff; }
+.nav-links a:hover::after { transform:scaleX(1); }
+.nav-links a.active { color:#fff; }
+.nav-links a.active::after { transform:scaleX(1); }
+
+.nav-cta {
+background: var(--red);
+color:#fff !important;
+padding:10px 22px;
+border-radius:2px;
+font-family:‘Barlow Condensed’, sans-serif !important;
+font-size:14px !important; font-weight:700 !important;
+letter-spacing:2px !important;
+text-transform:uppercase;
+transition: background .2s !important;
+}
+
+.nav-cta:hover { background:var(--red-dark) !important; }
+.nav-cta::after { display:none !important; }
+
+/* ── HERO ── */
+#hero {
+min-height:100vh;
+display:flex; flex-direction:column; align-items:center; justify-content:center;
+position:relative; overflow:hidden;
+padding-top:70px;
+}
+
+.hero-bg {
+position:absolute; inset:0;
+background:
+radial-gradient(ellipse 80% 60% at 50% 60%, rgba(224,16,16,0.08) 0%, transparent 70%),
+radial-gradient(ellipse 60% 40% at 20% 80%, rgba(224,16,16,0.05) 0%, transparent 60%),
+linear-gradient(180deg, #0a0a0a 0%, #080808 100%);
+z-index:-1;
+}
+
+/* animated scan lines */
+.hero-bg::after {
+content:’’;
+position:absolute; inset:0;
+background: repeating-linear-gradient(
+0deg,
+transparent,
+transparent 2px,
+rgba(255,255,255,0.012) 2px,
+rgba(255,255,255,0.012) 4px
+);
+pointer-events:none;
+}
+
+.hero-content {
+text-align:center;
+z-index:1;
+animation: fadeUp .8s ease both;
+}
+
+.hero-badge {
+display:inline-block;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:13px; font-weight:700; letter-spacing:4px;
+text-transform:uppercase;
+color:var(--red);
+border:1px solid rgba(224,16,16,0.4);
+padding:6px 16px; border-radius:2px;
+margin-bottom:28px;
+animation: fadeUp .8s .1s ease both;
+}
+
+h1 {
+font-family:‘Bebas Neue’, sans-serif;
+font-size: clamp(72px, 12vw, 140px);
+line-height:.95;
+letter-spacing:4px;
+color:#fff;
+animation: fadeUp .8s .2s ease both;
+}
+
+h1 .red { color:var(--red); }
+
+.hero-sub {
+font-size:18px; font-weight:500;
+color:var(--silver);
+margin:20px 0 40px;
+letter-spacing:1px;
+animation: fadeUp .8s .3s ease both;
+}
+
+.hero-btns {
+display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+animation: fadeUp .8s .4s ease both;
+}
+
+.btn-primary {
+background:var(--red);
+color:#fff;
+padding:16px 36px;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:16px; font-weight:700; letter-spacing:2px;
+text-transform:uppercase;
+border:none; border-radius:2px; cursor:pointer;
+text-decoration:none;
+transition:background .2s, transform .15s;
+}
+
+.btn-primary:hover { background:var(--red-dark); transform:translateY(-2px); }
+
+.btn-outline {
+background:transparent;
+color:var(--silver-light);
+padding:16px 36px;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:16px; font-weight:700; letter-spacing:2px;
+text-transform:uppercase;
+border:1px solid rgba(200,200,200,0.3); border-radius:2px; cursor:pointer;
+text-decoration:none;
+transition:border-color .2s, color .2s, transform .15s;
+}
+
+.btn-outline:hover { border-color:var(--silver-light); color:#fff; transform:translateY(-2px); }
+
+.hero-stats {
+display:flex; gap:60px; margin-top:70px; justify-content:center;
+animation: fadeUp .8s .5s ease both;
+}
+
+.stat { text-align:center; }
+
+.stat-num {
+font-family:‘Bebas Neue’, sans-serif;
+font-size:48px; color:#fff; letter-spacing:2px; line-height:1;
+}
+
+.stat-num span { color:var(--red); }
+
+.stat-label {
+font-size:12px; font-weight:600; letter-spacing:3px;
+color:var(--silver); text-transform:uppercase; margin-top:4px;
+}
+
+/* scroll arrow */
+.scroll-arrow {
+position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+display:flex; flex-direction:column; align-items:center; gap:6px;
+animation: bounce 2s infinite;
+opacity:.5;
+}
+
+.scroll-arrow span {
+display:block; width:10px; height:10px;
+border-right:2px solid var(--red); border-bottom:2px solid var(--red);
+transform:rotate(45deg);
+}
+
+@keyframes bounce {
+0%,100%{transform:translateX(-50%) translateY(0);}
+50%{transform:translateX(-50%) translateY(8px);}
+}
+
+/* ── SECTION SHARED ── */
+section { padding:100px 40px; position:relative; }
+
+.section-label {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:12px; font-weight:700; letter-spacing:5px;
+text-transform:uppercase; color:var(--red);
+margin-bottom:12px;
+}
+
+.section-title {
+font-family:‘Bebas Neue’, sans-serif;
+font-size: clamp(42px, 6vw, 72px);
+letter-spacing:2px; color:#fff; line-height:1;
+margin-bottom:16px;
+}
+
+.section-sub {
+font-size:16px; color:var(--silver); max-width:560px; line-height:1.7;
+}
+
+/* ── RED DIVIDER ── */
+.divider {
+width:100%; height:3px;
+background: linear-gradient(90deg, transparent, var(--red), transparent);
+opacity:.4;
+}
+
+/* ── SERVICES ── */
+#services { background:var(--dark); }
+
+.services-header { text-align:center; margin-bottom:64px; }
+.services-header .section-sub { margin:0 auto; }
+
+.services-grid {
+display:grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap:2px;
+max-width:1200px; margin:0 auto;
+}
+
+.service-card {
+background:var(--dark2);
+padding:40px 32px;
+border:1px solid rgba(255,255,255,0.05);
+position:relative; overflow:hidden;
+transition: transform .25s, border-color .25s;
+cursor:default;
+}
+
+.service-card::before {
+content:’’;
+position:absolute; top:0; left:0; right:0; height:3px;
+background:var(--red);
+transform:scaleX(0); transform-origin:left;
+transition:transform .3s;
+}
+
+.service-card:hover { transform:translateY(-4px); border-color:rgba(224,16,16,0.2); }
+.service-card:hover::before { transform:scaleX(1); }
+
+.service-icon {
+font-size:36px; margin-bottom:20px;
+display:block;
+}
+
+.service-card h3 {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:22px; font-weight:800; letter-spacing:1px;
+color:#fff; margin-bottom:12px; text-transform:uppercase;
+}
+
+.service-card p { font-size:14px; color:#999; line-height:1.7; }
+
+.service-price {
+margin-top:20px;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:18px; font-weight:700;
+color:var(--red); letter-spacing:1px;
+}
+
+/* ── WHY US ── */
+#why {
+background: linear-gradient(135deg, #0d0d0d 0%, #111 50%, #0d0d0d 100%);
+}
+
+.why-inner {
+max-width:1200px; margin:0 auto;
+display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+}
+
+.why-list { margin-top:40px; display:flex; flex-direction:column; gap:24px; }
+
+.why-item {
+display:flex; gap:20px; align-items:flex-start;
+padding:24px; background:var(--dark2);
+border:1px solid rgba(255,255,255,0.05);
+border-left:3px solid var(--red);
+transition:background .2s;
+}
+
+.why-item:hover { background:var(--dark3); }
+
+.why-icon { font-size:28px; flex-shrink:0; margin-top:2px; }
+
+.why-item h4 {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:18px; font-weight:800; letter-spacing:1px;
+color:#fff; text-transform:uppercase; margin-bottom:6px;
+}
+
+.why-item p { font-size:14px; color:#999; line-height:1.6; }
+
+.why-visual {
+position:relative; display:flex; align-items:center; justify-content:center;
+}
+
+.why-circle {
+width:340px; height:340px; border-radius:50%;
+border:2px solid rgba(224,16,16,0.3);
+display:flex; align-items:center; justify-content:center;
+position:relative;
+animation: spin 20s linear infinite;
+}
+
+.why-circle::before {
+content:’’;
+position:absolute; inset:16px; border-radius:50%;
+border:1px solid rgba(224,16,16,0.15);
+}
+
+.why-circle-inner {
+width:220px; height:220px; border-radius:50%;
+background: radial-gradient(circle, rgba(224,16,16,0.15), rgba(8,8,8,0.9));
+border:2px solid rgba(224,16,16,0.4);
+display:flex; flex-direction:column; align-items:center; justify-content:center;
+text-align:center;
+animation: spin 20s linear infinite reverse;
+}
+
+.why-circle-inner .big-num {
+font-family:‘Bebas Neue’, sans-serif;
+font-size:64px; color:var(--red); line-height:1;
+}
+
+.why-circle-inner p {
+font-size:12px; font-weight:700; letter-spacing:3px;
+text-transform:uppercase; color:var(--silver);
+}
+
+@keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+/* ── PROCESS ── */
+#process { background:var(--black); text-align:center; }
+
+.process-header { margin-bottom:64px; }
+
+.process-steps {
+display:flex; gap:0; max-width:1000px; margin:0 auto;
+position:relative;
+}
+
+.process-steps::before {
+content:’’;
+position:absolute; top:32px; left:10%; right:10%; height:2px;
+background:linear-gradient(90deg, var(--red), rgba(224,16,16,0.2));
+z-index:0;
+}
+
+.step {
+flex:1; display:flex; flex-direction:column; align-items:center;
+padding:0 20px; position:relative; z-index:1;
+}
+
+.step-num {
+width:64px; height:64px; border-radius:50%;
+background:var(--red);
+display:flex; align-items:center; justify-content:center;
+font-family:‘Bebas Neue’, sans-serif; font-size:28px; color:#fff;
+border:3px solid var(--black);
+margin-bottom:24px;
+transition:transform .2s;
+}
+
+.step:hover .step-num { transform:scale(1.15); }
+
+.step h4 {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:18px; font-weight:800; letter-spacing:1px;
+color:#fff; text-transform:uppercase; margin-bottom:10px;
+}
+
+.step p { font-size:13px; color:#888; line-height:1.6; }
+
+/* ── TESTIMONIALS ── */
+#reviews { background:var(--dark); }
+
+.reviews-header { text-align:center; margin-bottom:64px; }
+
+.reviews-grid {
+display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+gap:24px; max-width:1200px; margin:0 auto;
+}
+
+.review-card {
+background:var(--dark2);
+border:1px solid rgba(255,255,255,0.06);
+padding:36px;
+position:relative;
+transition:transform .2s;
+}
+
+.review-card:hover { transform:translateY(-4px); }
+
+.review-card::before {
+content:’”’;
+position:absolute; top:16px; right:24px;
+font-family:‘Bebas Neue’, sans-serif;
+font-size:80px; color:rgba(224,16,16,0.15); line-height:1;
+}
+
+.stars { color:var(--red); font-size:18px; margin-bottom:16px; letter-spacing:2px; }
+
+.review-card p { font-size:15px; color:#bbb; line-height:1.7; margin-bottom:24px; }
+
+.reviewer {
+display:flex; align-items:center; gap:14px;
+}
+
+.reviewer-avatar {
+width:44px; height:44px; border-radius:50%;
+background:linear-gradient(135deg, var(--red), var(--red-dark));
+display:flex; align-items:center; justify-content:center;
+font-family:‘Bebas Neue’, sans-serif; font-size:18px; color:#fff;
+}
+
+.reviewer-name {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:16px; font-weight:700; color:#fff; letter-spacing:1px; text-transform:uppercase;
+}
+
+.reviewer-sub { font-size:12px; color:#666; }
+
+/* ── CONTACT ── */
+#contact {
+background: linear-gradient(135deg, #0d0d0d, #111);
+}
+
+.contact-inner {
+max-width:1200px; margin:0 auto;
+display:grid; grid-template-columns:1fr 1fr; gap:80px;
+}
+
+.contact-info { display:flex; flex-direction:column; gap:32px; }
+
+.contact-item {
+display:flex; gap:20px; align-items:flex-start;
+}
+
+.contact-item-icon {
+width:48px; height:48px; background:rgba(224,16,16,0.1);
+border:1px solid rgba(224,16,16,0.3);
+display:flex; align-items:center; justify-content:center;
+font-size:20px; flex-shrink:0;
+}
+
+.contact-item h4 {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:14px; font-weight:700; letter-spacing:3px;
+text-transform:uppercase; color:var(--red); margin-bottom:6px;
+}
+
+.contact-item p { font-size:15px; color:var(--silver); line-height:1.6; }
+
+.contact-form { display:flex; flex-direction:column; gap:16px; }
+
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+
+.form-group { display:flex; flex-direction:column; gap:8px; }
+
+.form-group label {
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:12px; font-weight:700; letter-spacing:3px;
+text-transform:uppercase; color:var(--silver);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+background:var(--dark2);
+border:1px solid rgba(255,255,255,0.1);
+color:#fff; padding:14px 16px;
+font-family:‘Barlow’, sans-serif; font-size:14px;
+border-radius:2px;
+outline:none;
+transition:border-color .2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+border-color:var(--red);
+}
+
+.form-group select option { background:var(--dark2); }
+
+.form-group textarea { resize:vertical; min-height:120px; }
+
+.form-submit {
+background:var(--red);
+color:#fff; border:none;
+padding:18px 40px;
+font-family:‘Barlow Condensed’, sans-serif;
+font-size:16px; font-weight:700; letter-spacing:3px;
+text-transform:uppercase; cursor:pointer; border-radius:2px;
+transition:background .2s, transform .15s;
+margin-top:8px;
+}
+
+.form-submit:hover { background:var(--red-dark); transform:translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+background:var(--black);
+border-top:1px solid rgba(224,16,16,0.2);
+padding:40px;
+display:flex; flex-direction:column; align-items:center; gap:20px;
+text-align:center;
+}
+
+.footer-logo {
+font-family:‘Bebas Neue’, sans-serif;
+font-size:32px; letter-spacing:4px; color:#fff;
+}
+
+.footer-logo span { color:var(--red); }
+
+.footer-links {
+display:flex; gap:32px; list-style:none;
+}
+
+.footer-links a {
+color:#666; text-decoration:none;
+font-size:13px; font-weight:600; letter-spacing:2px;
+text-transform:uppercase;
+transition:color .2s;
+}
+
+.footer-links a:hover { color:var(--red); }
+
+.footer-copy { font-size:13px; color:#444; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+from { opacity:0; transform:translateY(30px); }
+to   { opacity:1; transform:translateY(0); }
+}
+
+.reveal {
+opacity:0; transform:translateY(30px);
+transition:opacity .7s ease, transform .7s ease;
+}
+
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* ── HAMBURGER BUTTON ── */
+#menu-btn {
+display:none;
+background:none; border:none; cursor:pointer;
+font-size:24px; color:#fff; line-height:1;
+}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+nav { padding:0 20px; }
+#menu-btn { display:block; }
+.nav-links { display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(8,8,8,0.98); padding:20px 0; gap:0; }
+.nav-links.open { display:flex; }
+.nav-links li { padding:0; }
+.nav-links a { display:block; padding:14px 24px; }
+section { padding:70px 24px; }
+.why-inner { grid-template-columns:1fr; }
+.why-visual { display:none; }
+.contact-inner { grid-template-columns:1fr; gap:48px; }
+.form-row { grid-template-columns:1fr; }
+.process-steps { flex-direction:column; align-items:center; gap:32px; }
+.process-steps::before { display:none; }
+.hero-stats { gap:32px; }
+.stat-num { font-size:36px; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-logo"><span>VDC</span> AUTO</div>
+  <button id="menu-btn" aria-label="Toggle navigation">☰</button>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">⚙️ Full Service Auto Repair</div>
+    <h1><span class="red">VDC</span><br>AUTO</h1>
+    <p class="hero-sub">We Come To You. Reliable. Fast. Done Right.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book a Service</a>
+      <a href="#services" class="btn-outline">View Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num"><span class="stat-count" data-target="500" data-suffix="+">0</span></div>
+        <div class="stat-label">Jobs Done</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="stat-count" data-target="5" data-suffix="★">0</span></div>
+        <div class="stat-label">Avg Rating</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num"><span class="stat-count" data-target="10" data-suffix="+">0</span></div>
+        <div class="stat-label">Yrs Experience</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-arrow"><span></span><span></span></div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+
+<section id="services">
+  <div class="services-header reveal">
+    <div class="section-label">What We Do</div>
+    <div class="section-title">Our Services</div>
+    <p class="section-sub">From routine maintenance to complex repairs — we handle it all at your location.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">🔧</span>
+      <h3>Oil Change</h3>
+      <p>Conventional, synthetic blend, or full synthetic. We use top-grade oil and OEM-spec filters for every vehicle.</p>
+      <div class="service-price">From $80</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🛑</span>
+      <h3>Brake Service</h3>
+      <p>Pad replacements, rotor resurfacing or replacement, caliper inspection. Full brake safety check included.</p>
+      <div class="service-price">From $150/axle</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🔋</span>
+      <h3>Battery Replacement</h3>
+      <p>Diagnose, test, and replace your battery on-site. We carry top-brand batteries for most makes and models.</p>
+      <div class="service-price">From $100</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🔍</span>
+      <h3>Diagnostic Scan</h3>
+      <p>Check engine light on? We run a full OBD-II scan and give you a clear report of what's going on.</p>
+      <div class="service-price">From $75</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🌡️</span>
+      <h3>Tune-Up</h3>
+      <p>Spark plugs, air filters, fuel filters, ignition system check. Restore your engine's full performance.</p>
+      <div class="service-price">From $150</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">⚡</span>
+      <h3>Alternator & Starter</h3>
+      <p>Charging system problems fixed on-site. We test, diagnose, and replace alternators and starters fast.</p>
+      <div class="service-price">From $200</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">❄️</span>
+      <h3>A/C Service</h3>
+      <p>Recharge refrigerant, leak checks, compressor diagnostics. Stay cool all summer long.</p>
+      <div class="service-price">From $120</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">💧</span>
+      <h3>Fluid Services</h3>
+      <p>Coolant flush, transmission fluid, brake fluid, power steering — full fluid maintenance on-site.</p>
+      <div class="service-price">From $80</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon">🔩</span>
+      <h3>Suspension & Steering</h3>
+      <p>Shocks, struts, ball joints, tie rods, and more. We keep your ride smooth and handling tight.</p>
+      <div class="service-price">From $180</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY US -->
+
+<section id="why">
+  <div class="why-inner">
+    <div>
+      <div class="section-label reveal">Why Choose Us</div>
+      <div class="section-title reveal">Built on<br>Trust &<br>Results</div>
+      <div class="why-list">
+        <div class="why-item reveal">
+          <span class="why-icon">🏠</span>
+          <div>
+            <h4>We Come To You</h4>
+            <p>No tow trucks, no waiting rooms. We bring the shop to your driveway, office, or wherever you are.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <span class="why-icon">💰</span>
+          <div>
+            <h4>Honest Pricing</h4>
+            <p>Upfront quotes with no hidden fees. You'll always know exactly what you're paying before we start.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <span class="why-icon">🛡️</span>
+          <div>
+            <h4>Guaranteed Work</h4>
+            <p>All repairs come with a satisfaction guarantee. If something isn't right, we make it right — period.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <span class="why-icon">⚡</span>
+          <div>
+            <h4>Same-Day Service</h4>
+            <p>Most jobs booked before noon are completed the same day. Fast turnaround, zero hassle.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual reveal">
+      <div class="why-circle">
+        <div class="why-circle-inner">
+          <div class="big-num">10+</div>
+          <p>Years of<br>Experience</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROCESS -->
+
+<section id="process">
+  <div class="process-header reveal">
+    <div class="section-label">How It Works</div>
+    <div class="section-title">Simple Process</div>
+    <p class="section-sub" style="margin:0 auto;">Getting your car fixed has never been this easy.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <h4>Book Online</h4>
+      <p>Fill out the form below or call us. Tell us your car issue and pick a time slot.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <h4>We Show Up</h4>
+      <p>Our mechanic arrives at your location — home, work, or anywhere — fully equipped.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <h4>Diagnose & Quote</h4>
+      <p>We diagnose the issue and give you a clear, honest quote before any work begins.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">4</div>
+      <h4>Fixed & Done</h4>
+      <p>We complete the repair on-site. You drive away happy — no dealership needed.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REVIEWS -->
+
+<section id="reviews">
+  <div class="reviews-header reveal">
+    <div class="section-label">Testimonials</div>
+    <div class="section-title">What Clients Say</div>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>VDC Auto came to my house and fixed my brakes in under 2 hours. Saved me a whole day at the dealership. Price was way better too. Highly recommend!</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">M</div>
+        <div>
+          <div class="reviewer-name">Marcus T.</div>
+          <div class="reviewer-sub">Brake Service</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>My check engine light was on for weeks. VDC diagnosed it in 20 minutes, explained exactly what was wrong, and fixed it on the spot. Straight up honest people.</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">J</div>
+        <div>
+          <div class="reviewer-name">Jessica R.</div>
+          <div class="reviewer-sub">Diagnostic + Repair</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="stars">★★★★★</div>
+      <p>Battery died in the parking lot at work. Called VDC and they were there within the hour. New battery installed, got home same day. Lifesaver — will use again!</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">D</div>
+        <div>
+          <div class="reviewer-name">Darnell K.</div>
+          <div class="reviewer-sub">Battery Replacement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+
+<section id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="section-label reveal">Get In Touch</div>
+      <div class="section-title reveal">Book Your<br>Service</div>
+      <p class="section-sub reveal">Ready to get your car fixed? Fill out the form and we'll confirm your appointment within 1 hour.</p>
+      <div class="contact-info" style="margin-top:40px;">
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <h4>Phone</h4>
+            <p>(555) 000-0000</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>info@vdcauto.com</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">🕐</div>
+          <div>
+            <h4>Hours</h4>
+            <p>Mon–Sat: 7:00 AM – 7:00 PM<br>Sunday: 9:00 AM – 4:00 PM</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <h4>Service Area</h4>
+            <p>We come to you — serving the entire metro area</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="contact-form" id="booking-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="John"/>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Smith"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="(555) 000-0000"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="you@email.com"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Year</label>
+            <input type="text" placeholder="2019"/>
+          </div>
+          <div class="form-group">
+            <label>Make & Model</label>
+            <input type="text" placeholder="Toyota Camry"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service Needed</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Oil Change</option>
+            <option>Brake Service</option>
+            <option>Battery Replacement</option>
+            <option>Diagnostic Scan</option>
+            <option>Tune-Up</option>
+            <option>A/C Service</option>
+            <option>Alternator / Starter</option>
+            <option>Fluid Services</option>
+            <option>Suspension & Steering</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Describe the Issue</label>
+          <textarea placeholder="Tell us what's going on with your vehicle..."></textarea>
+        </div>
+        <button class="form-submit" id="form-submit">⚙️ Request Appointment</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-logo"><span>VDC</span> AUTO</div>
+  <ul class="footer-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© <span id="footer-year">2026</span> VDC Auto. All rights reserved. | Full Service Mobile Mechanic</div>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
