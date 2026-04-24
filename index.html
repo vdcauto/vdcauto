@@ -19,13 +19,13 @@
     --text: #dddddd;
   }
 
-- { margin:0; padding:0; box-sizing:border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 html { scroll-behavior: smooth; }
 
 body {
-background: var(–black);
-color: var(–text);
+background: var(--black);
+color: var(--text);
 font-family: ‘Barlow’, sans-serif;
 overflow-x: hidden;
 }
@@ -56,14 +56,14 @@ font-size:26px; letter-spacing:3px;
 color:#fff;
 }
 
-.nav-logo span { color: var(–red); }
+.nav-logo span { color: var(--red); }
 
 .nav-links {
 display:flex; gap:32px; list-style:none;
 }
 
 .nav-links a {
-color: var(–silver);
+color: var(--silver);
 text-decoration:none;
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:15px; font-weight:700; letter-spacing:2px;
@@ -74,16 +74,18 @@ position:relative;
 
 .nav-links a::after {
 content:’’; position:absolute; bottom:-4px; left:0; right:0;
-height:2px; background:var(–red);
+height:2px; background:var(--red);
 transform:scaleX(0); transform-origin:left;
 transition:transform .25s;
 }
 
 .nav-links a:hover { color:#fff; }
 .nav-links a:hover::after { transform:scaleX(1); }
+.nav-links a.active { color:#fff; }
+.nav-links a.active::after { transform:scaleX(1); }
 
 .nav-cta {
-background: var(–red);
+background: var(--red);
 color:#fff !important;
 padding:10px 22px;
 border-radius:2px;
@@ -94,7 +96,7 @@ text-transform:uppercase;
 transition: background .2s !important;
 }
 
-.nav-cta:hover { background:var(–red-dark) !important; }
+.nav-cta:hover { background:var(--red-dark) !important; }
 .nav-cta::after { display:none !important; }
 
 /* ── HERO ── */
@@ -139,7 +141,7 @@ display:inline-block;
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:13px; font-weight:700; letter-spacing:4px;
 text-transform:uppercase;
-color:var(–red);
+color:var(--red);
 border:1px solid rgba(224,16,16,0.4);
 padding:6px 16px; border-radius:2px;
 margin-bottom:28px;
@@ -155,11 +157,11 @@ color:#fff;
 animation: fadeUp .8s .2s ease both;
 }
 
-h1 .red { color:var(–red); }
+h1 .red { color:var(--red); }
 
 .hero-sub {
 font-size:18px; font-weight:500;
-color:var(–silver);
+color:var(--silver);
 margin:20px 0 40px;
 letter-spacing:1px;
 animation: fadeUp .8s .3s ease both;
@@ -171,7 +173,7 @@ animation: fadeUp .8s .4s ease both;
 }
 
 .btn-primary {
-background:var(–red);
+background:var(--red);
 color:#fff;
 padding:16px 36px;
 font-family:‘Barlow Condensed’, sans-serif;
@@ -182,11 +184,11 @@ text-decoration:none;
 transition:background .2s, transform .15s;
 }
 
-.btn-primary:hover { background:var(–red-dark); transform:translateY(-2px); }
+.btn-primary:hover { background:var(--red-dark); transform:translateY(-2px); }
 
 .btn-outline {
 background:transparent;
-color:var(–silver-light);
+color:var(--silver-light);
 padding:16px 36px;
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:16px; font-weight:700; letter-spacing:2px;
@@ -196,7 +198,7 @@ text-decoration:none;
 transition:border-color .2s, color .2s, transform .15s;
 }
 
-.btn-outline:hover { border-color:var(–silver-light); color:#fff; transform:translateY(-2px); }
+.btn-outline:hover { border-color:var(--silver-light); color:#fff; transform:translateY(-2px); }
 
 .hero-stats {
 display:flex; gap:60px; margin-top:70px; justify-content:center;
@@ -210,11 +212,11 @@ font-family:‘Bebas Neue’, sans-serif;
 font-size:48px; color:#fff; letter-spacing:2px; line-height:1;
 }
 
-.stat-num span { color:var(–red); }
+.stat-num span { color:var(--red); }
 
 .stat-label {
 font-size:12px; font-weight:600; letter-spacing:3px;
-color:var(–silver); text-transform:uppercase; margin-top:4px;
+color:var(--silver); text-transform:uppercase; margin-top:4px;
 }
 
 /* scroll arrow */
@@ -227,7 +229,7 @@ opacity:.5;
 
 .scroll-arrow span {
 display:block; width:10px; height:10px;
-border-right:2px solid var(–red); border-bottom:2px solid var(–red);
+border-right:2px solid var(--red); border-bottom:2px solid var(--red);
 transform:rotate(45deg);
 }
 
@@ -242,7 +244,7 @@ section { padding:100px 40px; position:relative; }
 .section-label {
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:12px; font-weight:700; letter-spacing:5px;
-text-transform:uppercase; color:var(–red);
+text-transform:uppercase; color:var(--red);
 margin-bottom:12px;
 }
 
@@ -254,18 +256,18 @@ margin-bottom:16px;
 }
 
 .section-sub {
-font-size:16px; color:var(–silver); max-width:560px; line-height:1.7;
+font-size:16px; color:var(--silver); max-width:560px; line-height:1.7;
 }
 
 /* ── RED DIVIDER ── */
 .divider {
 width:100%; height:3px;
-background: linear-gradient(90deg, transparent, var(–red), transparent);
+background: linear-gradient(90deg, transparent, var(--red), transparent);
 opacity:.4;
 }
 
 /* ── SERVICES ── */
-#services { background:var(–dark); }
+#services { background:var(--dark); }
 
 .services-header { text-align:center; margin-bottom:64px; }
 .services-header .section-sub { margin:0 auto; }
@@ -278,7 +280,7 @@ max-width:1200px; margin:0 auto;
 }
 
 .service-card {
-background:var(–dark2);
+background:var(--dark2);
 padding:40px 32px;
 border:1px solid rgba(255,255,255,0.05);
 position:relative; overflow:hidden;
@@ -289,7 +291,7 @@ cursor:default;
 .service-card::before {
 content:’’;
 position:absolute; top:0; left:0; right:0; height:3px;
-background:var(–red);
+background:var(--red);
 transform:scaleX(0); transform-origin:left;
 transition:transform .3s;
 }
@@ -314,7 +316,7 @@ color:#fff; margin-bottom:12px; text-transform:uppercase;
 margin-top:20px;
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:18px; font-weight:700;
-color:var(–red); letter-spacing:1px;
+color:var(--red); letter-spacing:1px;
 }
 
 /* ── WHY US ── */
@@ -331,13 +333,13 @@ display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
 
 .why-item {
 display:flex; gap:20px; align-items:flex-start;
-padding:24px; background:var(–dark2);
+padding:24px; background:var(--dark2);
 border:1px solid rgba(255,255,255,0.05);
-border-left:3px solid var(–red);
+border-left:3px solid var(--red);
 transition:background .2s;
 }
 
-.why-item:hover { background:var(–dark3); }
+.why-item:hover { background:var(--dark3); }
 
 .why-icon { font-size:28px; flex-shrink:0; margin-top:2px; }
 
@@ -378,18 +380,18 @@ animation: spin 20s linear infinite reverse;
 
 .why-circle-inner .big-num {
 font-family:‘Bebas Neue’, sans-serif;
-font-size:64px; color:var(–red); line-height:1;
+font-size:64px; color:var(--red); line-height:1;
 }
 
 .why-circle-inner p {
 font-size:12px; font-weight:700; letter-spacing:3px;
-text-transform:uppercase; color:var(–silver);
+text-transform:uppercase; color:var(--silver);
 }
 
 @keyframes spin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
 
 /* ── PROCESS ── */
-#process { background:var(–black); text-align:center; }
+#process { background:var(--black); text-align:center; }
 
 .process-header { margin-bottom:64px; }
 
@@ -401,7 +403,7 @@ position:relative;
 .process-steps::before {
 content:’’;
 position:absolute; top:32px; left:10%; right:10%; height:2px;
-background:linear-gradient(90deg, var(–red), rgba(224,16,16,0.2));
+background:linear-gradient(90deg, var(--red), rgba(224,16,16,0.2));
 z-index:0;
 }
 
@@ -412,10 +414,10 @@ padding:0 20px; position:relative; z-index:1;
 
 .step-num {
 width:64px; height:64px; border-radius:50%;
-background:var(–red);
+background:var(--red);
 display:flex; align-items:center; justify-content:center;
 font-family:‘Bebas Neue’, sans-serif; font-size:28px; color:#fff;
-border:3px solid var(–black);
+border:3px solid var(--black);
 margin-bottom:24px;
 transition:transform .2s;
 }
@@ -431,7 +433,7 @@ color:#fff; text-transform:uppercase; margin-bottom:10px;
 .step p { font-size:13px; color:#888; line-height:1.6; }
 
 /* ── TESTIMONIALS ── */
-#reviews { background:var(–dark); }
+#reviews { background:var(--dark); }
 
 .reviews-header { text-align:center; margin-bottom:64px; }
 
@@ -441,7 +443,7 @@ gap:24px; max-width:1200px; margin:0 auto;
 }
 
 .review-card {
-background:var(–dark2);
+background:var(--dark2);
 border:1px solid rgba(255,255,255,0.06);
 padding:36px;
 position:relative;
@@ -457,7 +459,7 @@ font-family:‘Bebas Neue’, sans-serif;
 font-size:80px; color:rgba(224,16,16,0.15); line-height:1;
 }
 
-.stars { color:var(–red); font-size:18px; margin-bottom:16px; letter-spacing:2px; }
+.stars { color:var(--red); font-size:18px; margin-bottom:16px; letter-spacing:2px; }
 
 .review-card p { font-size:15px; color:#bbb; line-height:1.7; margin-bottom:24px; }
 
@@ -467,7 +469,7 @@ display:flex; align-items:center; gap:14px;
 
 .reviewer-avatar {
 width:44px; height:44px; border-radius:50%;
-background:linear-gradient(135deg, var(–red), var(–red-dark));
+background:linear-gradient(135deg, var(--red), var(--red-dark));
 display:flex; align-items:center; justify-content:center;
 font-family:‘Bebas Neue’, sans-serif; font-size:18px; color:#fff;
 }
@@ -505,10 +507,10 @@ font-size:20px; flex-shrink:0;
 .contact-item h4 {
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:14px; font-weight:700; letter-spacing:3px;
-text-transform:uppercase; color:var(–red); margin-bottom:6px;
+text-transform:uppercase; color:var(--red); margin-bottom:6px;
 }
 
-.contact-item p { font-size:15px; color:var(–silver); line-height:1.6; }
+.contact-item p { font-size:15px; color:var(--silver); line-height:1.6; }
 
 .contact-form { display:flex; flex-direction:column; gap:16px; }
 
@@ -519,13 +521,13 @@ text-transform:uppercase; color:var(–red); margin-bottom:6px;
 .form-group label {
 font-family:‘Barlow Condensed’, sans-serif;
 font-size:12px; font-weight:700; letter-spacing:3px;
-text-transform:uppercase; color:var(–silver);
+text-transform:uppercase; color:var(--silver);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-background:var(–dark2);
+background:var(--dark2);
 border:1px solid rgba(255,255,255,0.1);
 color:#fff; padding:14px 16px;
 font-family:‘Barlow’, sans-serif; font-size:14px;
@@ -537,15 +539,15 @@ transition:border-color .2s;
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-border-color:var(–red);
+border-color:var(--red);
 }
 
-.form-group select option { background:var(–dark2); }
+.form-group select option { background:var(--dark2); }
 
 .form-group textarea { resize:vertical; min-height:120px; }
 
 .form-submit {
-background:var(–red);
+background:var(--red);
 color:#fff; border:none;
 padding:18px 40px;
 font-family:‘Barlow Condensed’, sans-serif;
@@ -555,11 +557,11 @@ transition:background .2s, transform .15s;
 margin-top:8px;
 }
 
-.form-submit:hover { background:var(–red-dark); transform:translateY(-2px); }
+.form-submit:hover { background:var(--red-dark); transform:translateY(-2px); }
 
 /* ── FOOTER ── */
 footer {
-background:var(–black);
+background:var(--black);
 border-top:1px solid rgba(224,16,16,0.2);
 padding:40px;
 display:flex; flex-direction:column; align-items:center; gap:20px;
@@ -571,7 +573,7 @@ font-family:‘Bebas Neue’, sans-serif;
 font-size:32px; letter-spacing:4px; color:#fff;
 }
 
-.footer-logo span { color:var(–red); }
+.footer-logo span { color:var(--red); }
 
 .footer-links {
 display:flex; gap:32px; list-style:none;
@@ -584,7 +586,7 @@ text-transform:uppercase;
 transition:color .2s;
 }
 
-.footer-links a:hover { color:var(–red); }
+.footer-links a:hover { color:var(--red); }
 
 .footer-copy { font-size:13px; color:#444; }
 
@@ -601,22 +603,21 @@ transition:opacity .7s ease, transform .7s ease;
 
 .reveal.visible { opacity:1; transform:translateY(0); }
 
+/* ── HAMBURGER BUTTON ── */
+#menu-btn {
+display:none;
+background:none; border:none; cursor:pointer;
+font-size:24px; color:#fff; line-height:1;
+}
+
 /* ── MOBILE ── */
 @media(max-width:768px){
-nav { padding:0 20px; position:relative; }
-#menu-btn { display:flex !important; align-items:center; justify-content:center; z-index:101; }
-.nav-links {
-display:none !important;
-position:absolute; top:70px; left:0; right:0;
-background:rgba(8,8,8,0.99);
-flex-direction:column !important; gap:0;
-border-bottom:2px solid rgba(224,16,16,0.4);
-z-index:100;
-}
-.nav-links.open { display:flex !important; }
-.nav-links li { border-bottom:1px solid rgba(255,255,255,0.06); }
-.nav-links a { display:block; padding:18px 24px; font-size:16px; }
-.nav-cta { margin:12px 24px 18px; display:inline-block; text-align:center; }
+nav { padding:0 20px; }
+#menu-btn { display:block; }
+.nav-links { display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(8,8,8,0.98); padding:20px 0; gap:0; }
+.nav-links.open { display:flex; }
+.nav-links li { padding:0; }
+.nav-links a { display:block; padding:14px 24px; }
 section { padding:70px 24px; }
 .why-inner { grid-template-columns:1fr; }
 .why-visual { display:none; }
@@ -635,11 +636,8 @@ section { padding:70px 24px; }
 <!-- NAV -->
 
 <nav>
-  <div class="nav-logo">
-    <img src="logo.png" alt="VDC Auto Logo" style="height:48px;width:48px;border-radius:50%;object-fit:cover;"/>
-    <span style="color:var(--red)">VDC</span> AUTO
-  </div>
-  <button id="menu-btn" style="display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;">☰</button>
+  <div class="nav-logo"><span>VDC</span> AUTO</div>
+  <button id="menu-btn" aria-label="Toggle navigation">☰</button>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
     <li><a href="#why">Why Us</a></li>
@@ -663,15 +661,15 @@ section { padding:70px 24px; }
     </div>
     <div class="hero-stats">
       <div class="stat">
-        <div class="stat-num"><span class="stat-count" data-target="500" data-suffix="+">0+</span></div>
+        <div class="stat-num"><span class="stat-count" data-target="500" data-suffix="+">0</span></div>
         <div class="stat-label">Jobs Done</div>
       </div>
       <div class="stat">
-        <div class="stat-num"><span class="stat-count" data-target="5" data-suffix="★">0★</span></div>
+        <div class="stat-num"><span class="stat-count" data-target="5" data-suffix="★">0</span></div>
         <div class="stat-label">Avg Rating</div>
       </div>
       <div class="stat">
-        <div class="stat-num"><span class="stat-count" data-target="10" data-suffix="+">0+</span></div>
+        <div class="stat-num"><span class="stat-count" data-target="10" data-suffix="+">0</span></div>
         <div class="stat-label">Yrs Experience</div>
       </div>
     </div>
@@ -921,42 +919,41 @@ section { padding:70px 24px; }
     </div>
     <div class="reveal">
       <div class="contact-form" id="booking-form">
-        <!-- 🔴 REPLACE "YOUR_FORM_ID" with your Formspree ID from formspree.io -->
         <form action="https://formspree.io/f/xeevvypz"
           method="POST" id="fs-form">
         <div class="form-row">
           <div class="form-group">
             <label>First Name</label>
-            <input type="text" name="first_name" placeholder="John" required/>
+            <input type="text" placeholder="John"/>
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input type="text" name="last_name" placeholder="Smith" required/>
+            <input type="text" placeholder="Smith"/>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Phone</label>
-            <input type="tel" name="phone" placeholder="(555) 000-0000" required/>
+            <input type="tel" placeholder="(555) 000-0000"/>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" name="email" placeholder="you@email.com" required/>
+            <input type="email" placeholder="you@email.com"/>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Year</label>
-            <input type="text" name="car_year" placeholder="2019" required/>
+            <input type="text" placeholder="2019"/>
           </div>
           <div class="form-group">
             <label>Make & Model</label>
-            <input type="text" name="car_make_model" placeholder="Toyota Camry" required/>
+            <input type="text" placeholder="Toyota Camry"/>
           </div>
         </div>
         <div class="form-group">
           <label>Service Needed</label>
-          <select name="service" required>
+          <select>
             <option value="">Select a service...</option>
             <option>Oil Change</option>
             <option>Brake Service</option>
@@ -972,18 +969,10 @@ section { padding:70px 24px; }
         </div>
         <div class="form-group">
           <label>Describe the Issue</label>
-          <textarea name="message" placeholder="Tell us what's going on with your vehicle..." required></textarea>
+          <textarea placeholder="Tell us what's going on with your vehicle..."></textarea>
         </div>
-        <!-- honeypot spam filter -->
-        <input type="text" name="_gotcha" style="display:none"/>
-        <input type="hidden" name="_subject" value="New VDC Auto Booking Request!"/>
         <button type="submit" class="form-submit" id="form-submit">⚙️ Request Appointment</button>
         </form>
-        <div id="form-success" style="display:none;text-align:center;padding:40px 20px;">
-          <div style="font-size:48px;margin-bottom:16px;">✅</div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#fff;letter-spacing:2px;">Request Sent!</div>
-          <p style="color:#999;margin-top:12px;">We'll confirm your appointment within 1 hour.</p>
-        </div>
       </div>
     </div>
   </div>
@@ -999,7 +988,7 @@ section { padding:70px 24px; }
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="footer-copy">© <span id="footer-year"></span> VDC Auto. All rights reserved. | Full Service Mobile Mechanic</div>
+  <div class="footer-copy">© <span id="footer-year">2026</span> VDC Auto. All rights reserved. | Full Service Mobile Mechanic</div>
 </footer>
 
 <script src="script.js"></script>
