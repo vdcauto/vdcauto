@@ -597,6 +597,69 @@
       .hero-stats { gap: 32px; }
       .stat-num { font-size: 36px; }
     }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      cursor: zoom-out;
+      animation: fadeIn 0.3s ease;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 95%;
+      max-height: 90%;
+      object-fit: contain;
+      border: 2px solid var(--red);
+      box-shadow: 0 20px 60px rgba(224,16,16,0.3);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 24px;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .lightbox-close:hover {
+      background: var(--red-dark);
+      transform: scale(1.1);
+    }
+    .lightbox-caption {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: rgba(224,16,16,0.9);
+      padding: 8px 20px;
+      border-radius: 2px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .featured-card-img {
+      cursor: zoom-in;
+    }
+
   </style>
 
 </head>
@@ -1270,8 +1333,50 @@
   // Footer year
   document.getElementById('footer-year').textContent = new Date().getFullYear();
 
+
+  // Lightbox — click photos to enlarge
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.featured-card-img').forEach(imgWrap => {
+    imgWrap.addEventListener('click', (e) => {
+      e.stopPropagation(); // Don't trigger card click
+      const img = imgWrap.querySelector('img');
+      const card = imgWrap.closest('.featured-card');
+      const titleEl = card.querySelector('h3');
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightboxCaption.textContent = titleEl ? titleEl.textContent : '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  lightboxClose.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+
   console.log('VDC Auto loaded ✅');
 </script>
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">✕</button>
+  <img id="lightbox-img" src="" alt=""/>
+  <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
 
 </body>
 </html>
